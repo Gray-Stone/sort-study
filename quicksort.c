@@ -28,13 +28,14 @@ void quicksort_test (int * a,int l)
 							//	naoutput(a,l+1);
 
 
-			for (;*p2>*midp && p2>p1;p2--);				// find the fisrt value that is smaller than the mid valude from the left
+			for (;*p2>=*midp && p2>p1;p2--);				// find the fisrt value that is smaller than the mid valude from the left
+															// must be >= otherwise when p1=midp and *p2=*mide death loop will accear
 			swap (p2,midp);								// switch value places
 			midp = p2;
 		}
 		//end of one sepration //
-		printf("one sppration	%d",*midp);
-		naoutput(a,l+1);
+	//	printf("one sppration	%d",*midp);
+	//	naoutput(a,l+1);
 
 
 		quicksort_test(a,midp-a);

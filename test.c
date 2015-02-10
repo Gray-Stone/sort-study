@@ -13,9 +13,7 @@ int main ()
 	int *p ,*midp;
 
 	l=nainput(a);
-	p=a;
-	midp=p+l/2-1;
-	for (i=0;i<5;i++);
-	printf("%d",*midp);
+	quicksort(a,l);
+	naoutput(a,l);
 
 }
