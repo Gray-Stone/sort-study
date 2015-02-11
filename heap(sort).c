@@ -3,43 +3,56 @@
 #define max 127
 #define MAX 127
 
-void matainmaxheap (int* a ,int l )
-{
 
+
+void create_maxheap(int*a,int l)
+{
 	int *left;
 	int*right;
-	int * parent;
-	int i,hight;
+	int * node;
 
-	for (i=0;i<)
-		for (parent=a; (parent-a) < l/2; parent ++)
-		{
-
-			left=a+(parent-a)*2+1;	// define left leaf
-			right=left+1;			// define right leaf
-			if (right-a<l )	// if there are a right side, make it smaller than left one.
-			{
-				if (*right>*left)
-				{
-					swap (right,left);
-				}
-			}
-
-			if (*left>*parent)	//  make left side smaller than parent.
-			{
-				swap(left,parent);
-			}
-
-			if (right-a<l )	// if there are a right side, make it smaller than left one.
-			{
-				if (*right>*left)
-				{
-					swap (right,left);
-				}
-			}
-		}
+	node=a;
+	left=a+(node-a)*2+1;	// define left leaf
+	right=left+1;			// define right leaf
+	if ( right-a<l) 		//there is a right leaf
+	{
+		if (*right>*left) swap (left,right);
+		if (*node<*left) swap ( left,node );
+		create_maxheap_second_step(a,left,l);
+		create_maxheap_second_step(a,right,l);	// as a is root, push the biggest element onto the root
 
 
+//		create_maxheap_second_step(a,left,l);	// as left is root, push the biggest element onto the root
+//		create_maxheap_second_step(a,right,l);	// as right is root, push the biggest element onto the root
+	}
+	else if (left-a<l)
+	{
+		if (*node<*left); swap (node,left);
+	}
+
+
+}
+
+void create_maxheap_second_step(int*a,int *node,int l)
+{
+	int *left;
+	int*right;
+	left=a+(node-a)*2+1;	// define left leaf
+	right=left+1;			// define right leaf
+	if ( right-a<l) 		//there is a right leaf
+	{
+		if (*right>*left) swap (left,right);
+		if (*node<*left) swap ( left,node );
+		create_maxheap_second_step(a,left,l);
+		create_maxheap_second_step(a,right,l);
+
+//		create_maxheap_second_step(a,left,l);	// as left is root, push the biggest element onto the root
+//		create_maxheap_second_step(a,right,l);	// as right is root, push the biggest element onto the root
+	}
+	else if (left-a<l)
+	{
+		if (*node<*left); swap (node,left);
+	}
 
 }
 
@@ -55,7 +68,7 @@ void main ()
 
 
 
-	matainmaxheap(a,l);
+	create_maxheap(a,l);
 
 
 	naoutput(a,l);
