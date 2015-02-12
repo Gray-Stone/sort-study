@@ -56,6 +56,36 @@ void create_maxheap_second_step(int*a,int *node,int l)
 
 }
 
+void maxtotopheap (int *a,int l) // only push the max value to the top
+{
+	int *node , *left , *right ;
+
+	int *largest ;
+
+
+	for (node =a+l/2-1;node>=a;node--)	 // starting from the last node, orginize every node to the top
+	{
+
+		left=a+(node-a)*2+1;	// define left leaf
+		right=left+1;			// define right leaf
+		largest=left;
+		if (right-a<l)		// if there is right side
+			if (*right>*left) largest = right ;
+		if (*largest>*node) swap(largest, node);	//put larget in current node
+	}
+
+
+}
+
+
+void maxheapsort(int * a,int l)
+{
+	for (;l>0;l--)
+	{
+		maxtotopheap(a,l);
+		swap(a,a+l-1);
+	}
+}
 
 void main ()
 {
@@ -64,12 +94,11 @@ void main ()
 	int i;
 	l=nainput(a);
 
-	// max heap
 
 
 
-	create_maxheap(a,l);
 
+	 maxheapsort(a,l);
 
 	naoutput(a,l);
 
