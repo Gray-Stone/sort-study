@@ -87,6 +87,41 @@ void maxheapsort(int * a,int l)
 	}
 }
 
+
+void maxtotopheap_forheap (int *a,int*s,int l) // only push the max value to the top
+{
+	int *node , *left , *right ;
+
+	int *largest ;
+
+
+	for (node =a+l/2-1;node>=s;node--)	 // starting from the last node, orginize every node to the top
+	{
+
+		left=a+(node-a)*2+1;	// define left leaf
+		right=left+1;			// define right leaf
+		largest=left;
+		if (right-a<l)		// if there is right side
+			if (*right>*left) largest = right ;
+		if (*largest>*node) swap(largest, node);	//put larget in current node
+	}
+
+
+}
+void buttontotop_tobutton(int * a , int l)
+{
+	int * s;
+	int * lastnode;
+	int i;
+
+	lastnode =a+l/2-1;
+	i=1;
+
+	for (s=a;s<=lastnode;s+i,i=i*2)
+		maxtotopheap_forheap(a,s,l);
+
+}
+
 void main ()
 {
 	int a[max];
@@ -98,7 +133,7 @@ void main ()
 
 
 
-	 maxheapsort(a,l);
+	 buttontotop_tobutton(a,l);
 
 	naoutput(a,l);
 
