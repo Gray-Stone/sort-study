@@ -34,22 +34,26 @@ void marchsort (int *a, int l )
 		// march //
 		p=a;
 
-		for (p=a;p<a+l&&b1<a+l/2 && b2<a+l-1;)
+		for ( p=a;(b1<a+l/2 || b2<a+l-1) && p<a+l;p++)
 		{
-			if (*b1<*b2)
+			if (*b1<*b2 && b1<a+l/2)
 			{
 				*p=*b1;
 				b1++;
-				p++;
 			}
-			else {*p=*b2;b2++;p++;}
-		}
-		if (b1>=a+l/2 && b2 <a+l-1 )
-			for (;b2<a+l-1;b2++,p++)
+			else if (b2<a+l-1)
+			{
 				*p=*b2;
-		if (b2>=a+l-1 && b1 <a+l/2 )
-			for (;b1<a+l/2;b1++,p++)
+				b2++;
+			}
+
+			else if (b1<a+l/2 && b2>=a+l-1)
+			{
 				*p=*b1;
+				b1++;
+			}
+
+		}
 
 
 	}
