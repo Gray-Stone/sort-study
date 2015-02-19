@@ -1,19 +1,76 @@
 #include <stdio.h>
-#include <math.h>
-#include <malloc.h>
-#include <string.h>
-#define max 127
 #include "sortingfunction.c"
-int main ()
+#define max 127
+#define MAX 127
+
+void marchsort (int *a, int l )
 {
-	int a[max],l;
-	int j,i, n,*p1,*p2;
-	int temp;
-	l--;
-	int *p ,*midp;
+	int b[l];
+	int i;
+	int *p, *b1,*b2;
+	int *temp ;
+	p=a;
+	b1=b;
+	b2=&b[l/2];
+
+	if (l>1) // if this array could be divided
+	{
+
+		// copy the array //
+		for ( i =0; i<l;i++,p++)
+		{
+			b[i]=*p;
+		}
+
+	//	printf("get array     ");
+	//	naoutput(a,l);
+
+
+		// divide //
+		marchsort(b1,l/2);
+		marchsort(b2,l-l/2);
+
+
+		// march //
+		p=a;
+
+		for ( p=a;(b1<a+l/2 || b2<a+l) && p<a+l;p++)
+		{
+			if (*b1<*b2 && b1<a+l/2)
+			{
+				*p=*b1;
+				b1++;
+			}
+			else if (b2<a+l)
+			{
+				*p=*b2;
+				b2++;
+			}
+
+			else if (b1<a+l/2 && b2>=a+l)
+			{
+				*p=*b1;
+				b1++;
+			}
+
+		}
+
+
+	}
+
+
+
+}
+
+
+void main ()
+{
+	int a[max] ;
+	int l ;
 
 	l=nainput(a);
-	quicksort(a,l);
-	naoutput(a,l);
 
+	marchsort(a,l);
+
+	naoutput(a,l);
 }

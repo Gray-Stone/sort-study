@@ -29,8 +29,6 @@ void create_maxheap(int*a,int l)
 	{
 		if (*node<*left); swap (node,left);
 	}
-
-
 }
 
 void create_maxheap_second_step(int*a,int *node,int l)

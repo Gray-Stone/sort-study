@@ -3,62 +3,45 @@
 #define max 127
 #define MAX 127
 
-void marchsort (int *a, int l )
+void magresort (int *a, int l )
 {
 	int b[l];
 	int i;
-	int *p, *b1,*b2;
-	int *temp ;
+	int *p, *p1,*p2;
 	p=a;
-	b1=b;
-	b2=&b[l/2];
 
-	if (l>1) // if this array could be divided
+
+	//seprate
+	if ( l>1 )
 	{
+		magresort(a,l/2);										// first half
+		magresort(a+l/2,l-l/2);									// second half
 
-		// copy the array //
-		for ( i =0; i<l;i++,p++)
+	}
+	// magre
+
+	for ( p1=a,p2=a+l/2,i=0;(p1<a+l/2 ||p2 <a+l ) && i<l;i++ )  // when one of the array and the output array is not finished
+	{
+		if ( *p1<*p2 && p1<a+l/2)								// if the first one is smaller
 		{
-			b[i]=*p;
+			b[i]=*p1;
+			p1++;
+		}
+		else if (p2<a+l)										//if the second one is smaller
+		{
+			b[i]=*p2;
+			p2++;
 		}
 
-	//	printf("get array     ");
-	//	naoutput(a,l);
-
-
-		// divide //
-		marchsort(b1,l/2);
-		marchsort(b2,l-l/2);
-
-
-		// march //
-		p=a;
-
-		for ( p=a;(b1<a+l/2 || b2<a+l-1) && p<a+l;p++)
+		else if (p1<a+l/2)										// if the second array is finished
 		{
-			if (*b1<*b2 && b1<a+l/2)
-			{
-				*p=*b1;
-				b1++;
-			}
-			else if (b2<a+l-1)
-			{
-				*p=*b2;
-				b2++;
-			}
-
-			else if (b1<a+l/2 && b2>=a+l-1)
-			{
-				*p=*b1;
-				b1++;
-			}
-
+			b[i]=*p1;
+			p1++;
 		}
-
 
 	}
 
-
+	for (i=0;i<l;p++,i++) {*p=b[i];}							// coppect the right array back to position
 
 }
 
@@ -70,7 +53,7 @@ void main ()
 
 	l=nainput(a);
 
-	marchsort(a,l);
+	magresort(a,l);
 
 	naoutput(a,l);
 }

@@ -3,6 +3,7 @@
 void swap (int *p1,int *p2);
 int nainput (int *a );
 void naoutput (int *a , int l);
+void maxtopheap (int *a,int*s,int l);
 
 
 ///////////////////////////////////
@@ -11,6 +12,9 @@ void bubblesort (int *a , int l);
 void selectionsort (int *a , int l);
 void shellsort (int *a , int l);
 void quicksort (int * a,int l);
+void heapsort (int * a , int l);
+void magresort (int *a, int l );
+
 ///////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,6 +61,27 @@ void naoutput (int *a , int l)
 }
 
 
+void maxtopheap (int *a,int*s,int l) // only push the max value to the top
+{
+	int *node , *left , *right ;
+
+	int *largest ;
+
+
+	for (node =a+l/2-1;node>=s;node--)	 // starting from the last node, orginize every node to the top
+	{
+
+		left=a+(node-a)*2+1;	// define left leaf
+		right=left+1;			// define right leaf
+		largest=left;
+		if (right-a<l)		// if there is right side
+			if (*right>*left) largest = right ;
+		if (*largest>*node) swap(largest, node);	//put larget in current node
+	}
+
+
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,8 +107,6 @@ void bubblesort (int *a , int l)
 		}
 	}
 }
-
-
 
 
 // 2015-01-23 Ca(OH)2, smallest to biggest . 选择排序 从小到大
@@ -162,6 +185,64 @@ void quicksort (int * a,int l)
 }
 
 
+// 2015-02-19 Ca(OH)2, smallest to biggest 归并排序 从小到大
+void magresort (int *a, int l )
+{
+	int b[l];
+	int i;
+	int *p, *p1,*p2;
+	p=a;
+
+
+	//seprate
+	if ( l>1 )
+	{
+		magresort(a,l/2);										// first half
+		magresort(a+l/2,l-l/2);									// second half
+
+	}
+	// magre
+
+	for ( p1=a,p2=a+l/2,i=0;(p1<a+l/2 ||p2 <a+l ) && i<l;i++ )  // when one of the array and the output array is not finished
+	{
+		if ( *p1<*p2 && p1<a+l/2)								// if the first one is smaller
+		{
+			b[i]=*p1;
+			p1++;
+		}
+		else if (p2<a+l)										//if the second one is smaller
+		{
+			b[i]=*p2;
+			p2++;
+		}
+
+		else if (p1<a+l/2)										// if the second array is finished
+		{
+			b[i]=*p1;
+			p1++;
+		}
+
+	}
+
+	for (i=0;i<l;p++,i++) {*p=b[i];}							// coppect the right array back to position
+
+}
+
+// 2015-02-19 Ca(OH)2, smallest to biggest 堆排序 从小到大
+void heapsort (int * a , int l)
+{
+	int * s;
+	int * lastnode;
+	int i;
+
+	lastnode =a+l/2-1;
+	i=1;
+
+	for (s=a;s<=lastnode;s+i,i=i*2)
+		maxtopheap(a,s,l);
+
+}
+
 
 
     /////////////////////////////////////////////////////////////
@@ -196,6 +277,14 @@ void quicksort (int * a,int l)
 // 2015-02-08 	add		void quicksort (int * a,int l)				快速排序 【从小到大】 			*** int array pointer and number of elements 	int 数组指针 int 数组元素个数
 
 
+// 2015-02-19	add 	void maxtopheap (int *a,int*s,int l)		建立大顶堆（不完全成功，只能将最大元素推到堆顶 		*** int array pointer, heap starting point pointer and number of elements
+//																																					int 数组指针 int 开始位置指针 int 数组元素位数
+
+
+// 2015-02-19	add 	void heapsort (int * a , int l)				堆排序 【从小到大】				*** int array pointer and number of elements 	int 数组指针 int 数组元素个数
+
+
+// 2015-02-19	add		void magresort (int *a, int l )				归并排序 【从小到大】			*** int array pointer and number of elements 	int 数组指针 int 数组元素个数
 
 
 
